@@ -1,2 +1,2 @@
-# covalent-discord-bot
-Discord bot for CQT price monitoring
+# Run bot
+go run structs.go main.go -t <bot token>
