@@ -1,2 +1,2 @@
 # Run bot
-go run structs.go main.go -t <bot token>
+`go run structs.go discord-bot.go -t <bot token>`
