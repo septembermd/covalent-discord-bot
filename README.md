@@ -1,5 +1,5 @@
 # Run bot
-go run structs.go main.go -t <bot token>
+`go run structs.go main.go -t <bot token>`
 
 # Invite bot to server
 Open url and follow dialog
