@@ -12,8 +12,6 @@ import (
 	"time"
 )
 
-// Token ODU5ODM1NjgzMTI4ODY4ODc1.YNyeYQ.gNb4f_Alu13lNGVqoeqi1XkSVl4
-// https://discord.com/oauth2/authorize?client_id=859835683128868875&permissions=207936&scope=bot
 var (
 	Token string
 	apiUrl = "https://api.coingecko.com/api/v3"
@@ -99,15 +97,15 @@ func main() {
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 
-	c1 := make(chan string, 1)
+	ch := make(chan string, 1)
 	go func() {
 		for {
 			price := getCurrentPrice()
 			delta := PercentageChange(lastPrice, price)
 			if delta > 10 {
-				c1 <- fmt.Sprintf("CQT is UP %v%%. Price is %v", delta, price)
+				ch <- fmt.Sprintf("CQT is UP %v%%. Price is %v", delta, price)
 			} else if delta < -10{
-				c1 <- fmt.Sprintf("CQT is DOWN %v%%. Price is %v", delta, price)
+				ch <- fmt.Sprintf("CQT is DOWN %v%%. Price is %v", delta, price)
 			}
 			lastPrice = price
 			time.Sleep(10 * time.Minute)
@@ -115,7 +113,7 @@ func main() {
 	}()
 
 	select {
-	case res := <-c1:
+	case res := <-ch:
 		_, err := dg.ChannelMessageSend(channel, res)
 		if err != nil {
 			log.Println(err)
